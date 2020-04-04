@@ -3,6 +3,28 @@
 #include "binarySearchTree.h"
 #include "stringBuilder.h"
 
+static binarySearchTreeNode* Remove(binarySearchTreeNode* subtree, int value)
+{
+  if(subtree == NULL) return NULL;
+
+  if(subtree->value == value)
+  {
+    if(subtree->left->right == NULL)
+    {
+      subtree->value = subtree->left->value;
+      subtree->left = subtree->left->left;
+    }
+    else
+    {
+      binarySearchTreeNode* temporary = subtree->left;
+      while(temporary->right->right != NULL)
+      {
+        temporary = temporary->right;
+      }
+    }
+  }
+}
+
 static binarySearchTreeNode* Add(binarySearchTreeNode* subtree, int value)
 {
   if(subtree == NULL) return NULL;
@@ -40,6 +62,7 @@ static binarySearchTreeNode* Add(binarySearchTreeNode* subtree, int value)
   return subtree;
 }
 
+// Code for printing taken from https://stackoverflow.com/questions/801740/c-how-to-draw-a-binary-tree-to-the-console
 int _print_t(binarySearchTreeNode *tree, int is_left, int offset, int depth, char s[20][255])
 {
     char b[20];
@@ -73,7 +96,7 @@ int _print_t(binarySearchTreeNode *tree, int is_left, int offset, int depth, cha
         return left + width + right;
 }
 
-// Code taken from https://stackoverflow.com/questions/801740/c-how-to-draw-a-binary-tree-to-the-console
+// Code for printing taken from https://stackoverflow.com/questions/801740/c-how-to-draw-a-binary-tree-to-the-console
 void print_t(binarySearchTreeNode *tree)
 {
     char s[20][255];
@@ -101,4 +124,4 @@ static char* ToString(binarySearchTreeNode* root)
 }
 
 binarySearchTreeAPIStruct const binarySearchTreeAPI =
-{Add, Print, ToString};
+{Add, Remove, Print, ToString};

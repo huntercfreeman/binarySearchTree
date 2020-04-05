@@ -9,17 +9,40 @@ static binarySearchTreeNode* Remove(binarySearchTreeNode* subtree, int value)
 
   if(subtree->value == value)
   {
-    if(subtree->left->right == NULL)
+    if(subtree->left != NULL)
     {
-      subtree->value = subtree->left->value;
-      subtree->left = subtree->left->left;
-    }
-    else
-    {
-      binarySearchTreeNode* temporary = subtree->left;
-      while(temporary->right->right != NULL)
+      if(subtree->left->right == NULL)
       {
-        temporary = temporary->right;
+        subtree->value = subtree->left->value;
+        subtree->left = subtree->left->left;
+      }
+      else
+      {
+        binarySearchTreeNode* temporary = subtree->left;
+        while(temporary->right->right != NULL)
+        {
+          temporary = temporary->right;
+        }
+        subtree->value = temporary->right->value;
+        temporary->right = temporary->right->left;
+      }
+    }
+    else if(subtree->right != NULL)
+    {
+      if(subtree->right->left == NULL)
+      {
+        subtree->value = subtree->right->value;
+        subtree->right = subtree->right->right;
+      }
+      else
+      {
+        binarySearchTreeNode* temporary = subtree->right;
+        while(temporary->left->left != NULL)
+        {
+          temporary = temporary->left;
+        }
+        subtree->value = temporary->left->value;
+        temporary->left = temporary->left->right;
       }
     }
   }

@@ -19,5 +19,8 @@ int main()
   binarySearchTreeAPI.Add(root, 44);
   binarySearchTreeAPI.Print(root);
 
+  binarySearchTreeAPI.Remove(root, 50);
+  binarySearchTreeAPI.Print(root);
+
   return 0;
 }

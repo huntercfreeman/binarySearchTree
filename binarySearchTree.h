@@ -16,7 +16,6 @@ typedef struct binarySearchTreeAPIStruct {
   binarySearchTreeNode* (* const Remove)(binarySearchTreeNode* subtree, int value);
 
   // prints the binarySearchTree to the stdout
-  // Code taken from https://stackoverflow.com/questions/801740/c-how-to-draw-a-binary-tree-to-the-console
   void (* const Print)(binarySearchTreeNode* subtree);
 
   // Returns a string that describes the binary search tree.

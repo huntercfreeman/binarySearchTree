@@ -3,6 +3,93 @@
 #include "binarySearchTree.h"
 #include "stringBuilder.h"
 
+#define LEFT -1
+#define RIGHT 1
+
+static binarySearchTreeNode* RemovePrivate(binarySearchTreeNode* subtree, int value, binarySearchTreeNode* parent, int directionTraveled)
+{
+  if(subtree == NULL) return NULL;
+
+  if(subtree->value == value)
+  {
+    if(subtree->left != NULL)
+    {
+      if(subtree->left->right == NULL)
+      {
+        binarySearchTreeNode* temporary = subtree->left;
+        subtree->value = subtree->left->value;
+        subtree->left = subtree->left->left;
+        free(temporary);
+        temporary = NULL;
+        return subtree;
+      }
+      else
+      {
+        binarySearchTreeNode* temporary = subtree->left;
+        while(temporary->right->right != NULL)
+        {
+          temporary = temporary->right;
+        }
+        subtree->value = temporary->right->value;
+        binarySearchTreeNode* temporary2 = temporary->right;
+        temporary->right = temporary->right->left;
+        free(temporary2);
+        return subtree;
+      }
+    }
+    else if(subtree->right != NULL)
+    {
+      if(subtree->right->left == NULL)
+      {
+        binarySearchTreeNode* temporary = subtree->right;
+        subtree->value = subtree->right->value;
+        subtree->right = subtree->right->right;
+        free(temporary);
+        temporary = NULL;
+        return subtree;
+      }
+      else
+      {
+        binarySearchTreeNode* temporary = subtree->right;
+        while(temporary->left->left != NULL)
+        {
+          temporary = temporary->left;
+        }
+        subtree->value = temporary->left->value;
+        binarySearchTreeNode* temporary2 = temporary->left;
+        temporary->left = temporary->left->right;
+        free(temporary2);
+        return subtree;
+      }
+    }
+    else
+    {
+      free(subtree);
+      subtree = NULL;
+      if(directionTraveled == LEFT)
+      {
+        parent->left = NULL;
+      }
+      else
+      {
+        parent->right = NULL;
+      }
+      return NULL;
+    }
+    return subtree;
+  }
+  if(value < subtree->value)
+  {
+    return RemovePrivate(subtree->left, value, subtree, LEFT);
+  }
+  if(value > subtree->value)
+  {
+    return RemovePrivate(subtree->right, value, subtree, RIGHT);
+  }
+
+  return subtree;
+}
+
 static binarySearchTreeNode* Remove(binarySearchTreeNode* subtree, int value)
 {
   if(subtree == NULL) return NULL;
@@ -13,8 +100,12 @@ static binarySearchTreeNode* Remove(binarySearchTreeNode* subtree, int value)
     {
       if(subtree->left->right == NULL)
       {
+        binarySearchTreeNode* temporary = subtree->left;
         subtree->value = subtree->left->value;
         subtree->left = subtree->left->left;
+        free(temporary);
+        temporary = NULL;
+        return subtree;
       }
       else
       {
@@ -24,15 +115,22 @@ static binarySearchTreeNode* Remove(binarySearchTreeNode* subtree, int value)
           temporary = temporary->right;
         }
         subtree->value = temporary->right->value;
+        binarySearchTreeNode* temporary2 = temporary->right;
         temporary->right = temporary->right->left;
+        free(temporary2);
+        return subtree;
       }
     }
     else if(subtree->right != NULL)
     {
       if(subtree->right->left == NULL)
       {
+        binarySearchTreeNode* temporary = subtree->right;
         subtree->value = subtree->right->value;
         subtree->right = subtree->right->right;
+        free(temporary);
+        temporary = NULL;
+        return subtree;
       }
       else
       {
@@ -42,10 +140,30 @@ static binarySearchTreeNode* Remove(binarySearchTreeNode* subtree, int value)
           temporary = temporary->left;
         }
         subtree->value = temporary->left->value;
+        binarySearchTreeNode* temporary2 = temporary->left;
         temporary->left = temporary->left->right;
+        free(temporary2);
+        return subtree;
       }
     }
+    else
+    {
+      free(subtree);
+      subtree = NULL;
+      return NULL;
+    }
+    return subtree;
   }
+  if(value < subtree->value)
+  {
+    return RemovePrivate(subtree->left, value, subtree, LEFT);
+  }
+  if(value > subtree->value)
+  {
+    return RemovePrivate(subtree->right, value, subtree, RIGHT);
+  }
+
+  return subtree;
 }
 
 static binarySearchTreeNode* Add(binarySearchTreeNode* subtree, int value)

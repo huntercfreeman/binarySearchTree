@@ -11,6 +11,7 @@ typedef struct stringBuilder {
 typedef struct stringBuilderAPIStruct {
   stringBuilder* (* const AppendChars)(stringBuilder *stringBuilder, char* value);
   stringBuilder* (* const AppendInt)(stringBuilder *stringBuilder, int value);
+  stringBuilder* (* const Constructor)();
 } stringBuilderAPIStruct;
 
 stringBuilderAPIStruct const stringBuilderAPI;

@@ -257,19 +257,49 @@ static void Print(binarySearchTreeNode* subtree)
   print_t(subtree);
 }
 
-ToStringPreorder(binarySearchTreeNode* root)
+// Preorder (Root, Left, Right)
+char* ToStringPreorder(binarySearchTreeNode* root, stringBuilder* stringBuilder)
 {
+  stringBuilderAPI.AppendInt(stringBuilder, root->value);
+  stringBuilderAPI.AppendChars(stringBuilder, " ");
 
+  if(root->left != NULL)
+    ToStringPreorder(root->left, stringBuilder);
+
+  if(root->right != NULL)
+    ToStringPreorder(root->right, stringBuilder);
+
+  return stringBuilder->string;
 }
 
-ToStringInorder(binarySearchTreeNode* root)
+// Inorder (Left, Root, Right)
+char* ToStringInorder(binarySearchTreeNode* root, stringBuilder* stringBuilder)
 {
+  if(root->left != NULL)
+    ToStringInorder(root->left, stringBuilder);
 
+  stringBuilderAPI.AppendInt(stringBuilder, root->value);
+  stringBuilderAPI.AppendChars(stringBuilder, " ");
+
+  if(root->right != NULL)
+    ToStringInorder(root->right, stringBuilder);
+
+  return stringBuilder->string;
 }
 
-ToStringPostorder(binarySearchTreeNode* root)
+// Postorder (Left, Right, Root)
+char* ToStringPostorder(binarySearchTreeNode* root, stringBuilder* stringBuilder)
 {
+  if(root->left != NULL)
+    ToStringPostorder(root->left, stringBuilder);
 
+  if(root->right != NULL)
+    ToStringPostorder(root->right, stringBuilder);
+
+  stringBuilderAPI.AppendInt(stringBuilder, root->value);
+  stringBuilderAPI.AppendChars(stringBuilder, " ");
+
+  return stringBuilder->string;
 }
 
 static char* ToString(binarySearchTreeNode* root, int traversalType)
@@ -277,16 +307,16 @@ static char* ToString(binarySearchTreeNode* root, int traversalType)
   switch(traversalType)
   {
     case preorder:
-      ToStringPreorder(root);
+      return ToStringPreorder(root, stringBuilderAPI.Constructor());
       break;
     case inorder:
-      ToStringInorder(root);
+      return ToStringInorder(root, stringBuilderAPI.Constructor());
       break;
     case postorder:
-      ToStringPostorder(root);
+      return ToStringPostorder(root, stringBuilderAPI.Constructor());
       break;
   }
-  return "Hello World!\n";
+  return "Provide a valid traversal type\n";
 }
 
 binarySearchTreeAPIStruct const binarySearchTreeAPI =

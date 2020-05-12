@@ -19,7 +19,7 @@ int main()
   binarySearchTreeAPI.Add(root, 44);
   binarySearchTreeAPI.Print(root);
 
-  binarySearchTreeAPI.Remove(root, 50);
+  root = binarySearchTreeAPI.Remove(root, 50);
   binarySearchTreeAPI.Print(root);
 
   printf("%s\n", binarySearchTreeAPI.ToString(root, preorder));

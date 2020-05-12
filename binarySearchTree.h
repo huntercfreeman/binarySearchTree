@@ -1,6 +1,8 @@
 #ifndef binarySearchTree
 #define binarySearchTree
 
+enum TraversalType { preorder = 0, inorder = 1, postorder = 2 };
+
 typedef struct binarySearchTreeNode {
   int value;
   struct binarySearchTreeNode* left;
@@ -19,7 +21,7 @@ typedef struct binarySearchTreeAPIStruct {
   void (* const Print)(binarySearchTreeNode* subtree);
 
   // Returns a string that describes the binary search tree.
-  char* (* const ToString)(binarySearchTreeNode* root);
+  char* (* const ToString)(binarySearchTreeNode* root, int traversalType);
 } binarySearchTreeAPIStruct;
 
 binarySearchTreeAPIStruct const binarySearchTreeAPI;

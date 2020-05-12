@@ -257,11 +257,36 @@ static void Print(binarySearchTreeNode* subtree)
   print_t(subtree);
 }
 
-
-
-static char* ToString(binarySearchTreeNode* root)
+ToStringPreorder(binarySearchTreeNode* root)
 {
-  return "Hello World";
+
+}
+
+ToStringInorder(binarySearchTreeNode* root)
+{
+
+}
+
+ToStringPostorder(binarySearchTreeNode* root)
+{
+
+}
+
+static char* ToString(binarySearchTreeNode* root, int traversalType)
+{
+  switch(traversalType)
+  {
+    case preorder:
+      ToStringPreorder(root);
+      break;
+    case inorder:
+      ToStringInorder(root);
+      break;
+    case postorder:
+      ToStringPostorder(root);
+      break;
+  }
+  return "Hello World!\n";
 }
 
 binarySearchTreeAPIStruct const binarySearchTreeAPI =

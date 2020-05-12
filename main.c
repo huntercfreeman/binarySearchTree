@@ -22,5 +22,9 @@ int main()
   binarySearchTreeAPI.Remove(root, 50);
   binarySearchTreeAPI.Print(root);
 
+  printf("%s\n", binarySearchTreeAPI.ToString(root, preorder));
+  printf("%s\n", binarySearchTreeAPI.ToString(root, inorder));
+  printf("%s\n", binarySearchTreeAPI.ToString(root, postorder));
+
   return 0;
 }
